@@ -1,16 +1,20 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import RegistrationPage from '@/components/RegistrationPage.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import LoginPage from '../components/LoginPage.vue';
+import RegistrationPage from '../components/RegistrationPage.vue';
 
-Vue.use(Router);
+const routes = [
+  { path: '/', component: LoginPage },
+  { path: '/registerPage', component: RegistrationPage },
+];
 
-export default new Router({
-  routes: [
-    {
-      path: '/registerPage',
-      name: 'RegisterPage',
-      component: RegistrationPage,
-    },
-    // other routes
-  ],
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
 });
+
+router.beforeEach((to, from, next) => {
+    console.log(`Navigating to: ${to.path}`);
+    next();
+  });
+
+export default router;

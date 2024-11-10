@@ -47,6 +47,7 @@ export default {
     },
     handleRegister() {
       console.log(this.$router);
+      // this.$router.push({ path: "/registerPage" });
       this.$router.push({ path: "/registerPage" });
     },
   },
