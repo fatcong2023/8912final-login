@@ -29,6 +29,8 @@
 </template>
 
 <script>
+
+import axios from 'axios';
 export default {
   name: "LoginPage",
   data() {
@@ -38,9 +40,26 @@ export default {
     };
   },
   methods: {
-    handleLogin() {
+    async handleLogin() {
       if (this.username && this.password) {
-        alert(`Logged in as ${this.username}`);
+        try {
+          const response = await axios.post('https://8912final-login-java.azurewebsites.net/api/login', {
+            username: this.username,
+            password: this.password
+          });
+
+          if (response.status === 201) {
+            if (this.username.toLowerCase() === 'admin') {
+              this.$router.push('/admin');
+            } else {
+              alert(`Successfully logged in as ${this.username}`);
+              // Add redirect for non-admin users if needed
+            }
+          }
+        } catch (error) {
+          alert("Unauthorized: Invalid username or password");
+          console.error('Login error:', error);
+        }
       } else {
         alert("Please enter both username and password");
       }
