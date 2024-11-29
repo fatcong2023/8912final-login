@@ -41,29 +41,29 @@ export default {
   },
   methods: {
     async handleLogin() {
-      if (this.username && this.password) {
-        try {
-          const response = await axios.post('https://8912final-login-java.azurewebsites.net/api/login', {
-            username: this.username,
-            password: this.password
-          });
+  if (this.username && this.password) {
+    try {
+      const response = await axios.post('https://8912final-login-java.azurewebsites.net/api/login', {
+        username: this.username,
+        password: this.password
+      });
 
-          if (response.status === 201) {
-            if (this.username.toLowerCase() === 'admin') {
-              this.$router.push('/admin');
-            } else {
-              alert(`Successfully logged in as ${this.username}`);
-              // Add redirect for non-admin users if needed
-            }
-          }
-        } catch (error) {
-          alert("Unauthorized: Invalid username or password");
-          console.error('Login error:', error);
+      if (response.status === 201) {
+        this.$store.dispatch('setUsername', this.username);
+        if (this.username.toLowerCase() === 'admin') {
+          this.$router.push('/admin');
+        } else {
+          this.$router.push('/schedule');
         }
-      } else {
-        alert("Please enter both username and password");
       }
-    },
+    } catch (error) {
+      alert("Unauthorized: Invalid username or password");
+      console.error('Login error:', error);
+    }
+  } else {
+    alert("Please enter both username and password");
+  }
+},
     handleRegister() {
       console.log(this.$router);
       // this.$router.push({ path: "/registerPage" });
