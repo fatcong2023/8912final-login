@@ -25,11 +25,11 @@ jobs:
           npm run test --if-present
         shell: cmd
 
-      - name: List build output
-        run: |
-          Get-ChildItem -Path . -Recurse
-          Get-ChildItem -Path ./dist -Recurse
-        shell: pwsh
+      # - name: List build output
+      #   run: |
+      #     Get-ChildItem -Path . -Recurse
+      #     Get-ChildItem -Path ./dist -Recurse
+      #   shell: pwsh
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
