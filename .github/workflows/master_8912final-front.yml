@@ -25,11 +25,10 @@ jobs:
           npm run test --if-present
         shell: cmd
 
-      # - name: List build output
-      #   run: |
-      #     Get-ChildItem -Path . -Recurse
-      #     Get-ChildItem -Path ./dist -Recurse
-      #   shell: pwsh
+      - name: Verify `dist` folder
+        run: |
+          Get-ChildItem -Path ./dist -Recurse
+        shell: pwsh
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -53,16 +52,17 @@ jobs:
         with:
           name: node-app
 
-      - name: List downloaded artifact
-        run: Get-ChildItem -Path . -Recurse
+      - name: Verify downloaded `dist` folder
+        run: |
+          Get-ChildItem -Path ./dist -Recurse
         shell: pwsh
 
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DA18C9C62D414B94BD10736064D1E84F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_390BCEF899AA485D965C1C4A20612938 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4B3D9A09B9A44B2E805AA80C05B9996E }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
